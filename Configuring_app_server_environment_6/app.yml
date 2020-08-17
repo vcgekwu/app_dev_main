@@ -1,0 +1,7 @@
+---
+  - name: app servers playbook
+    hosts: app
+    become: true
+    roles:
+      - apache
+      - php

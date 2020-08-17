@@ -1,0 +1,27 @@
+dbconn:
+  host: server44 
+  user: devop
+  pass: Redhat_5000
+  db: devopsdemo
+
+
+
+haproxy_backend_httpchk: ''
+haproxy_backend_servers:
+  - name: server22
+    address: 192.168.43.121:80
+  - name: server33
+    address: 192.168.43.122:80
+haproxy_socket: /var/run/haproxy.sock
+
+mysql_root_password: Linux_5000
+mysql_databases:
+  - name: devopsdemo
+    encoding: latin1
+    collation: latin1_general_ci
+mysql_users:
+  - name: devop
+    host: "%"
+    password: Redhat_5000
+    priv: "devopsdemo.*:ALL"
+mysql_bind_address: '0.0.0.0'

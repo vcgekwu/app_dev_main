@@ -1,0 +1,24 @@
+---
+  - name: playbook to configure db servers
+    hosts: db
+    become: yes
+    roles:
+      - { role: geerlingguy.mysql }
+    tasks:
+      - name: download database schema
+        get_url:
+          url: https://raw.githubusercontent.com/devopsdemoapps/devops-demo-app/master/data/devops-demo-{{ app.version }}.sql
+          dest: /tmp/devops-demo-{{ app.version }}.sql
+          mode: 0444
+        tags: schema
+
+      - name: Schema Migrate
+        mysql_db:
+          name: "{{ dbconn.db }}"
+          login_host: "127.0.0.1"
+          login_password: linux5000
+          login_user: "root"
+          state: import
+          target: /tmp/devops-demo-{{ app.version }}.sql
+        tags: schema
+

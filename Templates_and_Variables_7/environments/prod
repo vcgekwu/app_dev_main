@@ -1,0 +1,18 @@
+[local]
+localhost ansible_connection=local
+
+[lb]
+server11
+
+[app]
+server22
+server33
+
+
+[db]
+server44
+
+[prod:children]
+lb
+app
+db

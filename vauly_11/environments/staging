@@ -1,0 +1,10 @@
+[app]
+server22
+
+[db]
+server22
+
+[staging:children]
+app
+db
+

@@ -1,0 +1,28 @@
+---
+  - name: open http firewall service
+    hosts: lb
+    become: true
+    tasks:
+      - name: open port 80
+        firewalld:
+          port: 804/tcp
+          permanent: yes
+          state: disabled
+          immediate: yes
+
+#        firewalld: 
+ #         service: http
+  #        permanent: yes
+        #  imediately: yes
+   #       state: disabled
+
+    #  - name: open https port
+     #   firewalld:
+      #    service: https
+       #   permanent: yes
+        #  state: disabled
+
+      - name: restart firewall service
+        service:
+          name: firewalld
+          state: restarted

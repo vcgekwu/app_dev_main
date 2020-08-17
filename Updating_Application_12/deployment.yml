@@ -1,0 +1,34 @@
+---
+- import_playbook: db.yml
+
+- hosts: app
+  become: yes
+  vars:
+    app:
+      version: 1.6
+  serial: 1
+
+  pre_tasks:
+    - name: take the app server out
+      haproxy:
+        host: '{{ inventory_hostname }}'
+        state: disabled
+      delegate_to: lb
+
+  roles:
+     - frontend
+
+  post_tasks:
+    - name: Wait 300 seconds for port 80 to be available
+      wait_for:
+        port: 80
+        host: '{{ inventory_hostname }}'
+        delay: 5
+        timeout: 300
+      connection: local
+    - name: add server to loadbalancer
+      haproxy:
+        host: '{{ inventory_hostname }}'
+        state: enabled
+      delegate_to: lb
+

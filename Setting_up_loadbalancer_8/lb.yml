@@ -1,0 +1,6 @@
+---
+  - name: setting up load balancer
+    hosts: lb
+    become: yes
+    roles:
+      - geerlingguy.haproxy
